@@ -1,3 +1,7 @@
+## Project files
+bin/
+bin_obj/
+
 # Prerequisites
 *.d
 
@@ -30,3 +34,17 @@
 *.exe
 *.out
 *.app
+
+# Microsoft files
+*.sln
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
+
+## Pycache
+__pycache__/
+
+## Editor directories and files
+.idea/
+.vscode/
+.vs/
