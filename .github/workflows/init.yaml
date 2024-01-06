@@ -7,17 +7,16 @@ on:
 
 jobs:
   configure-project: 
-    runs-on: "windows"
+    runs-on: "windows-latest"
     steps:
       - uses: actions/checkout@v2
-      - ses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       - uses: jannekem/run-python-script-action@v1 
         with: 
           script: config-premake.py 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+      - uses: peter-evans/create-pull-request@v3
         with:
           commit-message: "Premake configuration with repo_name as ${{ github.event.repository.name }}"
           title: Premake Config 
