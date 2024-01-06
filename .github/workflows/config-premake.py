@@ -13,6 +13,8 @@ if len(sys.argv) < 2:
 
 repo_name = sys.argv[1]
 
+print(os.getcwd())
+
 premake_path = "{}/premake5.lua".format(repo_name)
 
 if not os.path.exists(premake_path):
