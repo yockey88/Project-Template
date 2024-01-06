@@ -1,14 +1,14 @@
 include "externals.lua"
 
-workspace "project"
-  startproject "runtime"
+workspace "Project-Template-Template"
+  startProject-Template-Template "runtime"
   architecture "x64"
   configurations {
     "Debug" ,
     "Release"
   }
 
-  startproject "project"
+  startProject-Template-Template "Project-Template-Template"
 
   language "C++"
   cppdialect "C++latest"
@@ -45,6 +45,6 @@ workspace "project"
 tdir = "%{wks.location}/bin/%{cfg.buildcfg}/%{prj.name}"
 odir = "%{wks.location}/bin_obj/%{cfg.buildcfg}/%{prj.name}"
 
-group "Project"
-include "./project"
+group "Project-Template"
+include "./Project-Template-Template"
 group ""

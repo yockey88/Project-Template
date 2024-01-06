@@ -1,5 +1,5 @@
-EXE_NAME = "project"
-PROJECT_NAME = "project"
+EXE_NAME = "Project-Template"
+PROJECT_NAME = "Project-Template"
 
 TOOLS_DIR = "tools"
 
