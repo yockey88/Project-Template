@@ -1,0 +1,8 @@
+name: Create Project
+on: create
+jobs:
+  configure-project: 
+    runs-on: "windows"
+    steps:
+      - name: Create Premake Files
+        run: python3 create-premake.py ${{ github.repository.name }} 
