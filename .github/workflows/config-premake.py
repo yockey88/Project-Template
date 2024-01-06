@@ -13,9 +13,7 @@ if len(sys.argv) < 2:
 
 repo_name = sys.argv[1]
 
-print(os.getcwd())
-
-premake_path = "{}/premake5.lua".format(repo_name)
+premake_path = "./premake5.lua"
 
 if not os.path.exists(premake_path):
     print("premake5.lua not found!")
@@ -28,7 +26,7 @@ else:
 
     open(premake_path , "w").write(premake_contents)
 
-proj_settings_path = "{}/tools/project_settings.py".format(repo_name)
+proj_settings_path = "./tools/project_settings.py".format(repo_name)
 
 if not os.path.exists(proj_settings_path):
     print("project_settings.py not found!")
