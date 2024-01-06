@@ -7,9 +7,9 @@ on:
 
 
 jobs:
-  permissions:
-    pull-requests: write
   configure-project: 
+    permissions:
+      pull-requests: write
     runs-on: "windows-latest"
     steps:
       - uses: actions/checkout@v2
