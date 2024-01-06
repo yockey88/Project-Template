@@ -1,10 +1,12 @@
 name: Create Project
 
-on: [ push ]
+on: create 
 
 
 jobs:
   configure-project: 
+  if: github.event.ref == github.event.master_branch
+  name: Configure Project
     permissions:
       contents: write
       pull-requests: write
