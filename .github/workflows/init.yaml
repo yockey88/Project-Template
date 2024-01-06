@@ -13,12 +13,11 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-      - run: python3 config-premake.py
+      - run: python3 ./.github/workflows/config-premake.py
       - uses: peter-evans/create-pull-request@v3
         with:
           commit-message: "Premake configuration with repo_name as ${{ github.event.repository.name }}"
           title: Premake Config 
-          body: |
-            # Cookiecutter format PR
-            Premake file configuration with repo_name as ${{ github.event.repository.name }}
+          body: | # Premake config PR
+          Premake file configuration with repo_name as ${{ github.event.repository.name }}
           branch: premake-config
