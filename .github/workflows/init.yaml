@@ -9,8 +9,6 @@ on:
 jobs:
   configure-project: 
     runs-on: "windows-latest"
-    permissions:
-      pull-requests: write
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v4
@@ -18,6 +16,8 @@ jobs:
           python-version: '3.x'
       - run: python3 ./.github/workflows/config-premake.py ${{ github.event.repository.name }}
       - uses: peter-evans/create-pull-request@v3
+        permissions:
+          pull-requests: write
         with:
           commit-message: "Premake configuration with repo_name as ${{ github.event.repository.name }}"
           title: Premake Config 
