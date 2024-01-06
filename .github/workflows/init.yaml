@@ -16,6 +16,7 @@ jobs:
           python-version: '3.x'
       - run: python3 ./.github/workflows/config-premake.py ${{ github.event.repository.name }}
   create-pull-request:
+    needs: configure-project
     runs-on: "windows-latest"
     steps:
       - uses: peter-evans/create-pull-request@v3
