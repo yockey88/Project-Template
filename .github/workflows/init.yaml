@@ -19,5 +19,5 @@ jobs:
           commit-message: "Premake configuration with repo_name as ${{ github.event.repository.name }}"
           title: Premake Config 
           body: | # Premake config PR
-          Premake file configuration with repo_name as ${{ github.event.repository.name }}
+            Premake file configuration with repo_name as ${{ github.event.repository.name }}
           branch: premake-config
