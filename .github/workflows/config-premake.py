@@ -21,8 +21,8 @@ if not os.path.exists(premake_path):
 else:
     print("premake5.lua found!")
     premake_contents = open(premake_path , "r").read()
-    premake_contents = premake_contents.replace("project", repo_name)
-    premake_contents = premake_contents.replace("Project", repo_name)
+    premake_contents = premake_contents.replace("\"project\"" , "\"{}\"".format(repo_name))
+    premake_contents = premake_contents.replace("\"Project\"" , "\"{}\"".format(repo_name))
 
     open(premake_path , "w").write(premake_contents)
 
@@ -34,6 +34,6 @@ if not os.path.exists(proj_settings_path):
 else:
     print("project_settings.py found!")
     project_settings_contents = open(proj_settings_path , "r").read()
-    project_settings_contents = project_settings_contents.replace("project", repo_name)
+    project_settings_contents = project_settings_contents.replace("\"project\"" , "\"{}\"".format(repo_name))
 
     open(proj_settings_path , "w").write(project_settings_contents)
