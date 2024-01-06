@@ -5,6 +5,9 @@ on:
     branches:
       - '**'
 
+permissions:
+  pull-requests: write
+
 jobs:
   configure-project: 
     runs-on: "windows-latest"
