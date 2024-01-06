@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - '**'
+
+
 jobs:
+  permissions:
+    pull-requests: write
   configure-project: 
     runs-on: "windows-latest"
     steps:
