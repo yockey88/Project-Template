@@ -2,12 +2,12 @@ name: Create Project
 
 on: [ push ]
 
-permissions:
-  contents: read
-  pull-requests: write
 
 jobs:
   configure-project: 
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: "windows-latest"
     steps:
       - uses: actions/checkout@v2
@@ -15,6 +15,9 @@ jobs:
         with:
           python-version: '3.x'
       - run: python3 ./.github/workflows/config-premake.py ${{ github.event.repository.name }}
+  create-pull-request:
+    runs-on: "windows-latest"
+    steps:
       - uses: peter-evans/create-pull-request@v3
         with:
           commit-message: "Premake configuration with repo_name as ${{ github.event.repository.name }}"
