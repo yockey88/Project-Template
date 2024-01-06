@@ -15,10 +15,7 @@ jobs:
         with:
           python-version: '3.x'
       - run: python3 ./.github/workflows/config-premake.py ${{ github.event.repository.name }}
-  create-pull-request:
-    needs: configure-project
-    runs-on: "windows-latest"
-    steps:
+        # steps:
       - uses: peter-evans/create-pull-request@v3
         with:
           commit-message: "Premake configuration with repo_name as ${{ github.event.repository.name }}"
@@ -26,3 +23,6 @@ jobs:
           body: | # Premake config PR
             Premake file configuration with repo_name as ${{ github.event.repository.name }}
           branch: premake-config
+        #create-pull-request:
+        #  needs: configure-project
+        #  runs-on: "windows-latest"
