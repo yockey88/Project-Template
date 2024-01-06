@@ -4,8 +4,8 @@ on: create
 
 
 jobs:
-  if: github.event.ref == github.event.master_branch
   configure-project: 
+    if: github.event.ref == github.event.master_branch
     permissions:
       contents: write
       pull-requests: write
