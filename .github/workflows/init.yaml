@@ -5,8 +5,7 @@ on: create
 
 jobs:
   configure-project: 
-  if: github.event.ref == github.event.master_branch
-  name: Configure Project
+    if: github.event.ref == github.event.master_branch
     permissions:
       contents: write
       pull-requests: write
