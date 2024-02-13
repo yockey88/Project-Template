@@ -23,26 +23,24 @@ def find_msbuild():
         else:
             MSBUILD.replace("2022" , "2019")
             if os.path.exists(MSBUILD):
-                return true
+                return True
             else:
-                return false
+                return False
     else:
-        return false
+        return False
 
-if project_settings.IsWindows():
-    if not find_msbuild():
-        print("MSBuild.exe not found in default location")
-        #print("Please specify the path to MSBuild.exe")
-        #print("Example: python buildsln.py -msbuild \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe\"")
-        ret = 1
-    else:
-        ret = subprocess.call(
-            [
-                "cmd.exe" , "/c" , MSBUILD , 
-                "{}.sln".format(project_settings.PROJECT_NAME) , 
-                "/property:Configuration={}".format(CONFIG)
-            ]
-        )
+if project_settings.IsWindows(): 
+    MSBUILD = os.environ["MSBUILD"][8:-1]
+    MSBUILD = "C:\\\\" + MSBUILD
+    ret = subprocess.call(
+        [
+            "cmd.exe" , "/c" , MSBUILD , 
+            "{}.sln".format(project_settings.PROJECT_NAME) , 
+            "/property:Configuration={}".format(CONFIG)
+        ]
+    )
+    if (ret != 0):
+        sys.exit(ret)
 
 if project_settings.IsLinux():
     ret = subprocess.call(["make" , "config={}".format(CONFIG)])
