@@ -47,21 +47,18 @@ local function AddInclude(table)
   end
 end
 
-local function AddDependencyProject(table)
-  if table.project_dir ~= nil then
-    print(" Adding project : " .. table.project_dir)
-    include(table.project_dir)
-  end
-end
-
 function ProcessDependencies(configuration)
+  if #External == 0 then
+    return
+  end
+
   local target = FirstToUpper(os.target())
 
   for key, lib_data in OrderedPairs(External) do
     local matches_config = true
 
-    if configuration ~= nil and lib_data.Configurations ~= nil then
-      matches_config = string.find(lib_data.Configurations, configuration)
+    if configuration ~= nil and lib_data.configurations ~= nil then
+      matches_config = string.find(lib_data.configurations, configuration)
     end
 
     local is_debug = configuration == "Debug"
@@ -103,24 +100,17 @@ function IncludeDependencies(configuration)
   end
 end
 
-function AddDependencies(externals)
-  if #externals == 0 then
+function AddDependencies()
+  if #external_paths == 0 then
     return
   end
 
-  if #external_paths > 0 then
-    print("[ Group ] : Externals")
-    group "Externals"
-    for key, lib_data in OrderedPairs(external_paths) do
-      include (key)
-    end
-    group ""
+  print("[ Group ] : Externals")
+  group "Externals"
+  for _, lib_data in OrderedPairs(external_paths) do
+    include (lib_data)
   end
-
-  for key, lib_data in OrderedPairs(externals) do
-    print("Adding external : " .. key)
-    AddDependencyProject(lib_data)
-  end
+  group ""
 end
 
 function AddDependency(data)
@@ -129,12 +119,14 @@ function AddDependency(data)
     return
   end
 
-  if DirExists(data.name) then
-    if data.name ~= nil then
-      external_paths[data.name] = data.name
-      External[data.name] = data
-    else
-      print("AddDependency: data.name is nil")
-    end
+  if data.path ~= nil then
+    external_paths[data.name] = data.path
+    External[data.name] = {}
+    External[data.name].include_dir = data.include_dir or nil
+    External[data.name].lib_name = data.lib_name or nil
+    External[data.name].lib_dir = data.lib_dir or nil
+    External[data.name].configurations = data.configurations or nil
+  else
+    print("AddDependency: data.name is nil")
   end
 end

@@ -1,5 +1,5 @@
-include "lua/util.lua"
-include "lua/configuration.lua"
+require("util")
+require("configuration")
 
 local function WorkspaceHeader(config)
   workspace (config.wks_name)
@@ -57,8 +57,10 @@ local function SetTargets(config)
 end
 
 local function AddSource(config)
+  print("[ Processing source code ]")
+  AddDependencies(External)
+
   if config.groups ~= nil and config.project_folders == nil and config.project == nil then
-    print("[ Creating source groups ]")
     ProcessGroups(config.groups)
   elseif config.project_folders ~= nil and config.groups == nil and config.project == nil then
     for project in config.project_folders do
@@ -91,12 +93,6 @@ function CppWorkspace(config)
     print("=====================================\n")
 
     SetTargets(config)
-
-    if config.dependencies ~= nil and #config.dependencies > 0 then
-      print("===> Processing External Dependencies <===")
-      AddDependencies(config.dependencies)
-      print("=====================================")
-    end
 
     print("===> Processing source code <===")
     AddSource(config)

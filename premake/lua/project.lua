@@ -26,7 +26,7 @@ end
 local function ProcessProjectComponents(project)
 end
 
-local function ProcessConfigurations(project)
+local function ProcessConfigurations(project , external)
     filter "system:windows"
       if project.windows_configuration ~= nil then
           project.windows_configuration()
@@ -61,7 +61,9 @@ local function ProcessConfigurations(project)
         optimize "Off"
         symbols "On"
       end
-      ProcessDependencies("Debug")
+      if not external then
+        ProcessDependencies("Debug")
+      end
 
     filter "configurations:Release"
       if project.release_configuration ~= nil then
@@ -70,36 +72,65 @@ local function ProcessConfigurations(project)
         optimize "On"
         symbols "Off"
       end
-      ProcessDependencies("Release")
+      if not external then
+        ProcessDependencies("Release")
+      end
 end
 
-function AddProject(project)
+local function VerifyProject(project)
   if project == nil then
-    print("AddProject: project is nil")
-    return
+    return false, "AddProject: project is nil"
   end
 
   if project.name == nil then
-    print("ProjectHeader: project.name is nil")
-    return
+    return false, "AddProject: project.name is nil"
   end
 
   if project.kind == nil then
-    print("ProjectHeader: project.kind is nil")
-    return
+    return false, "AddProject: project.kind is nil"
   end
 
   if project.files == nil then
-    print("AddProject: project.files is nil")
+    return false, "AddProject: project.files is nil"
+  end
+
+  return true , ""
+end
+
+function AddExternalProject(project)
+  local success, message = VerifyProject(project)
+  if not success then
+    print(" -- Error: " .. message)
     return
   end
 
-  project.include_dir = project.include_dir or function() end
+  project.include_dirs = project.include_dirs or function() end
+
+  print(" -- Adding Dependency : " .. project.name)
+  ProjectHeader(project)
+    project.files()
+    project.include_dirs()
+
+    if project.defines ~= nil then
+      project.defines()
+    end
+
+    ProcessConfigurations(project , true)
+end
+
+function AddProject(project)
+  local success, message = VerifyProject(project)
+  if not success then
+    print(" -- Error: " .. message)
+    return
+  end
+
+  project.include_dirs = project.include_dirs or function() end
 
   print(" -- Adding project : " .. project.name)
   ProjectHeader(project)
     project.files()
-    project.include_dir()
+    project.include_dirs()
 
     ProcessProjectComponents(project)
 
