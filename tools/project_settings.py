@@ -1,5 +1,5 @@
 EXE_NAME = "project"
-PROJECT_NAME = "project"
+PROJECT_NAME = "TestWorkspace"
 
 TOOLS_DIR = "tools"
 

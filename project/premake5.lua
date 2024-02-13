@@ -1,39 +1,19 @@
-include "./postbuild.lua"
+local project = {}
 
-projectname = "project"
+project.name = "project"
+project.kind = "ConsoleApp"
+project.cppdialect = "C++latest"
+project.staticruntime = "on"
 
-project (projectname)
-    kind "ConsoleApp"
-    language "C++"
-    cppdialect "C++latest"
-    staticruntime "on"
+project.files = function()
+  files {
+    "./src/**.cpp",
+    "./include/**.hpp"
+  }
+end
 
-    targetdir(tdir)
-    objdir(odir)
+project.includedirs = function()
+  includedirs { "include/" }
+end
 
-    files {
-        "./src/**.cpp",
-        "./include/**.hpp"
-    }
-
-    includedirs { "include/" }
-
-    filter "system:windows"
-        systemversion "latest"
-
-    filter { "system:linux" }
-        result , err = os.outputof("pkg-config --cflags --libs gtk+-3.0")
-        linkoptions { result }
-
-    filter "configurations:Debug"
-        symbols "on"
-
-        ProcessDependencies("Debug")
-
-    filter "configurations:Release"
-        optimize "on"
-        symbols "off"
-
-        ProcessDependencies("Release")
-
-    RunPostBuildCommands()
+AddProject(project)
