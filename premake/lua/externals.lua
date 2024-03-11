@@ -1,4 +1,4 @@
-include "ordered_pairs.lua"
+require("ordered_pairs")
 
 local function FirstToUpper(str)
   return (str:gsub("^%l", string.upper))
@@ -6,7 +6,7 @@ end
 
 local external_paths = {}
 
-External = {
+local external = {
   -- Example
   -- Mono = {
   --   include_dir = "%{wks.location}/externals/mono/include" ,
@@ -48,13 +48,13 @@ local function AddInclude(table)
 end
 
 function ProcessDependencies(configuration)
-  if #External == 0 then
+  if #external == 0 then
     return
   end
 
   local target = FirstToUpper(os.target())
 
-  for key, lib_data in OrderedPairs(External) do
+  for _, lib_data in OrderedPairs(external) do
     local matches_config = true
 
     if configuration ~= nil and lib_data.configurations ~= nil then
@@ -83,7 +83,7 @@ end
 function IncludeDependencies(configuration)
   local target = FirstToUpper(os.target())
 
-  for key, lib_data in OrderedPairs(configuration) do
+  for _, lib_data in OrderedPairs(configuration) do
     local matches_config = true
 
     if configuration ~= nil and lib_data.Configurations ~= nil then
@@ -120,13 +120,14 @@ function AddDependency(data)
   end
 
   if data.path ~= nil then
-    external_paths[data.name] = data.path
-    External[data.name] = {}
-    External[data.name].include_dir = data.include_dir or nil
-    External[data.name].lib_name = data.lib_name or nil
-    External[data.name].lib_dir = data.lib_dir or nil
-    External[data.name].configurations = data.configurations or nil
+    table.insert(external_paths, data.path)
   else
     print("AddDependency: data.name is nil")
   end
+
+  table.insert(external, data)
+end
+
+function AddExternal()
+  AddDependencies()
 end

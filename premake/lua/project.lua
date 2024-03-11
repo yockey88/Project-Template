@@ -23,9 +23,6 @@ local function ProjectHeader(project_data)
     objdir (odir)
 end
 
-local function ProcessProjectComponents(project)
-end
-
 local function ProcessConfigurations(project , external)
     filter "system:windows"
       if project.windows_configuration ~= nil then
